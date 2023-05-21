@@ -21,7 +21,7 @@ def getRequest():
     vehicleMake = input("Vehicle make: ")
     vehicleModel = input("Vehicle model: ")
     vehicleLicense = input("Vehicle license: ")
-    confirmationEmail = input("Confirmation email: ")
+    confirmationEmail = input("Confirmation email address: ")
     
     return Request(property=propertyName, password=password, apt=apt, vehicleMake=vehicleMake, vehicleModel=vehicleModel, vehicleLicense=vehicleLicense, email=confirmationEmail)
 
@@ -37,14 +37,20 @@ if __name__ == '__main__':
     )
     
     #driver(defaultRequest)
-    # request = getRequest()
+    request = getRequest()
     numDays = getNumDays()
     
-    interval = 60
+    interval = 24 * 60 * 60
     for _ in range(numDays):
-        #driver(request=request)
-        print("test")
-        time.sleep(interval)
+        try: 
+            driver(request=request)
+            print("Registration complete, will re-register in 24 hours. ")
+            time.sleep(interval)
+        except: 
+            print("Something went wrong, see the above error")
+            print("Please fix the error then run the program again")
+            print("Exiting...")
+            exit()
     
     print("Completed... terminating program")
     
