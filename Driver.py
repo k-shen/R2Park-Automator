@@ -22,6 +22,7 @@ def driver(request: Request) :
         clickAndType(DRIVER, xpath="//form//button[@id='confirmProperty']")
     except: 
         print("Something went wrong on the property name page...")
+        return 
     print("Successfully typed in the property name: " + request.property)
     
     #page2
@@ -30,6 +31,7 @@ def driver(request: Request) :
         clickAndType(DRIVER, xpath="//form//button[@id='confirmPropertySelection']")
     except: 
         print("Something went wrong on the property selection page...")
+        return 
     print("Successfully selected the first property")
     
     #page3
@@ -37,14 +39,17 @@ def driver(request: Request) :
         clickAndType(DRIVER, xpath="//button[@id='registrationTypeVisitor']")
     except: 
         print("Something went wrong on the registration type page...")
+        return 
     print("Successfully selected the registration type (visitor parking)")
     
     #page4 
     try: 
         clickAndType(DRIVER, xpath="//form//input[@id='accessCode']", message=request.password)
         clickAndType(DRIVER, xpath="//form//button[@id='propertyPassword']")
+        
     except: 
         print("Something went wrong on the access password page...")
+        return 
     print("Successfully typed in the registration password: " + request.password)
     
     #page5
@@ -57,6 +62,7 @@ def driver(request: Request) :
         clickAndType(DRIVER, xpath="//form//button[@id='vehicleInformation']")
     except: 
         print("Something went wrong on the vehicle information page...")
+        return 
     print("Successfully registered the vehicle: " + request.vehicleMake + " " + request.vehicleModel + " " + request.vehicleLicense 
           + " for apartment " + request.apt)
     
@@ -67,6 +73,7 @@ def driver(request: Request) :
         clickAndType(DRIVER, xpath="//button[@id='email-confirmation-send-view']")
     except: 
         print("Something went wrong on the email confirmation page...")
+        return
     print("Successfully sent the confirmation to email: " + request.email)
     
     DRIVER.close()

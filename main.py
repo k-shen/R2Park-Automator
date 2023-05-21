@@ -44,6 +44,8 @@ if __name__ == '__main__':
     for _ in range(numDays):
         try: 
             driver(request=request)
+            if numDays == 1:
+                break
             print("Registration complete, will re-register in 24 hours. ")
             time.sleep(interval)
         except: 
