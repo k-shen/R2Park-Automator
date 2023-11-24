@@ -1,5 +1,6 @@
 from Driver import driver
 from Request import Request
+from Driver import NoneException
 import time
 
 def getNumDays():
@@ -15,7 +16,7 @@ def getNumDays():
 
 def getRequest():
     print("Please fill out the vehicle registration form: ")
-    propertyName = input("Property name: ")
+    propertyName = input("Property name (if multiple properties are returned, will default to first property in the result): ")
     password = input("Access code: ")
     apt = input("Apartment: ")
     vehicleMake = input("Vehicle make: ")
@@ -26,7 +27,8 @@ def getRequest():
     return Request(property=propertyName, password=password, apt=apt, vehicleMake=vehicleMake, vehicleModel=vehicleModel, vehicleLicense=vehicleLicense, email=confirmationEmail)
 
 if __name__ == '__main__':
-    defaultRequest = Request(
+    #default, used for testing
+    request = Request(
         property='copeland',
         password='Summer2511',
         apt='354',
@@ -34,20 +36,29 @@ if __name__ == '__main__':
         vehicleModel='Impreza',
         vehicleLicense='IXG260',
         email='kaiwenshen27@gmail.com'
-    )
+    ) 
+    numDays = 2
+    interval = 20
     
-    #driver(defaultRequest)
+    # comment this section out for debug
     request = getRequest()
     numDays = getNumDays()
+    interval = 23 * 60 * 60
     
-    interval = 24 * 60 * 60
-    for _ in range(numDays):
+    day = 0
+    while day < numDays:
         try: 
+            
             driver(request=request)
             if numDays == 1:
                 break
-            print("Registration complete, will re-register in 24 hours. ")
+            print("Registration complete, will re-register in 23 hours. ")
             time.sleep(interval)
+            day += 1
+        except NoneException:
+            password = input("Please re enter the access password: ")
+            request.password = password
+            
         except: 
             print("Something went wrong, see the above error")
             print("Please fix the error then run the program again")
